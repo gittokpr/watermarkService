@@ -3,8 +3,11 @@ package watermark
 import (
 	"context"
 	"net/http"
+	"os"
 
 	"github.com/gittokpr/watermark-service/internal"
+	"github.com/go-kit/log"
+	"github.com/lithammer/shortuuid/v3"
 )
 
 type watermarkService struct{}
@@ -14,11 +17,11 @@ func NewService() Service {
 }
 
 func (w *watermarkService) Get(_ context.Context, filters ...internal.Filter) ([]internal.Document, error) {
-	doc := internal.Document {
+	doc := internal.Document{
 		Content: "book",
-		Title: "Harry potter and the half blood prince",
-		Author: "J.K. Rowling",
-		Topic: "Fiction and magic",
+		Title:   "Harry potter and the half blood prince",
+		Author:  "J.K. Rowling",
+		Topic:   "Fiction and magic",
 	}
 
 	return []internal.Document{doc}, nil
@@ -37,14 +40,14 @@ func (w *watermarkService) AddDocument(_ context.Context, doc *internal.Document
 	return newTicketID, nil
 }
 
-func (w *watermarkService) ServiceStatus(_ context.Context) (int, error)  {
+func (w *watermarkService) ServiceStatus(_ context.Context) (int, error) {
 	logger.Log("Checking the Service health...")
 	return http.StatusOK, nil
 }
 
-var logger log.Logger 
+var logger log.Logger
 
 func init() {
-	logger = new log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
+	logger = log.NewLogfmtLogger(log.NewSyncWriter(os.Stderr))
 	logger = log.With(logger, "ts", log.DefaultTimestampUTC)
 }

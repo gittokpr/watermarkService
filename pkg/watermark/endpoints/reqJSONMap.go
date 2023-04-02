@@ -1,5 +1,7 @@
 package endpoints
 
+import "github.com/gittokpr/watermark-service/internal"
+
 type GetRequest struct {
 	Filters []internal.Filter `json:"filters,omitempty"`
 }
@@ -18,7 +20,7 @@ type StatusResponse struct {
 	Err    string          `json:"err,omitempty"`
 }
 
-type WatermarkRequestt struct {
+type WatermarkRequest struct {
 	TicketID string `json:"ticketID"`
 	Mark     string `json:"mark"`
 }
